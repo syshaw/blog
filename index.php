@@ -4,7 +4,7 @@ require("php/mysql_conf.php");
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
     <title id="rh_title">导航页</title>
     <link rel="icon" href="src/img/ioc.jpg" type="image/x-icon"/>
     <link rel="stylesheet" href="src/css/index.css">
