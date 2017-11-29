@@ -10,7 +10,7 @@ require("../php/mysql_conf.php");
         <title>Guestboard(留言板)</title>
     </head>
     <body >
-        <h1>Welcome to 留言板(beta 1.0)<br>
+        <h1>Welcome to 留言板(beta 1.1)<br>
             <iframe src="http://music.163.com/outchain/player?type=2&amp;id=471942&amp;auto=1&amp;height=66" width="250px" height="86" frameborder="no" marginwidth="0" marginheight="100"></iframe>
             <hr>
         </h1>

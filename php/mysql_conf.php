@@ -10,6 +10,7 @@ if (!$conn) {
 	echo "mysql connect error" . mysqli_error($conn);
 	die();
 }
+mysqli_query($conn, "set names utf8");
 function getViews($x){
 	mysqli_query($x, 'update views set count=count+1');
 	$res = mysqli_query($x ,'select count from views');
@@ -28,7 +29,7 @@ function getIpaddr()
    $ips = explode (", ", $_SERVER['HTTP_X_FORWARDED_FOR']);
    if ($ip) { array_unshift($ips, $ip); $ip = FALSE; }
    for ($i = 0; $i < count($ips); $i++) {
-    if (!eregi ("^(10│172.16│192.168).", $ips[$i])) {
+    if (!preg_match("^(10│172.16│192.168).", $ips[$i])) {
      $ip = $ips[$i];
      break;
     }
@@ -85,57 +86,55 @@ function getBrowser(){
 function getOS(){
  $os='';
  $Agent=$_SERVER['HTTP_USER_AGENT'];
- if (eregi('win',$Agent)&&strpos($Agent, '95')){
+ if (preg_match('/.+win.+/i',$Agent)&&strpos($Agent, '95')){
   $os='Windows 95';
- }elseif(eregi('win 9x',$Agent)&&strpos($Agent, '4.90')){
-  $os='Windows ME';
- }elseif(eregi('win',$Agent)&&ereg('98',$Agent)){
+ }elseif(preg_match('/.+win.+/i',$Agent)&&preg_match('98',$Agent)){
   $os='Windows 98';
- }elseif(eregi('win',$Agent)&&eregi('nt 5.0',$Agent)){
+ }elseif(preg_match('/.+win.+/i',$Agent)&&preg_match('/.+nt 5.0.+/i',$Agent)){
   $os='Windows 2000';
- }elseif(eregi('win',$Agent)&&eregi('nt 6.0',$Agent)){
+ }elseif(preg_match('/.+win.+/i',$Agent)&&preg_match('/.+nt 6.0.+/i',$Agent)){
   $os='Windows Vista';
- }elseif(eregi('win',$Agent)&&eregi('nt 6.1',$Agent)){
+ }elseif(preg_match('/.+win.+/i',$Agent)&&preg_match('/.+nt 6.1.+/i',$Agent)){
   $os='Windows 7';
- }elseif(eregi('win',$Agent)&&eregi('nt 5.1',$Agent)){
+ }elseif(preg_match('/.+win.+/i',$Agent)&&preg_match('/.+nt 5.1.+/i',$Agent)){
   $os='Windows XP';
- }elseif(eregi('win',$Agent)&&eregi('nt',$Agent)){
+ }elseif(preg_match('/.+win.+/i',$Agent)&&preg_match('/.+nt.+/i',$Agent)){
   $os='Windows NT';
- }elseif(eregi('win',$Agent)&&ereg('32',$Agent)){
+ }elseif(preg_match('/.+win.+/i',$Agent)&&preg_match('32',$Agent)){
   $os='Windows 32';
- }elseif(eregi('linux',$Agent)){
+ }elseif(preg_match('/.+linux.+/i',$Agent)){
   $os='Linux';
- }elseif(eregi('unix',$Agent)){
+ }elseif(preg_match('/.+unix.+/i',$Agent)){
   $os='Unix';
- }else if(eregi('sun',$Agent)&&eregi('os',$Agent)){
+ }else if(preg_match('/.+sun.+/i',$Agent)&&preg_match('/.+os.+/',$Agent)){
   $os='SunOS';
- }elseif(eregi('ibm',$Agent)&&eregi('os',$Agent)){
+ }elseif(preg_match('/.+ibm.+/i',$Agent)&&preg_match('/.+os.+/',$Agent)){
   $os='IBM OS/2';
- }elseif(eregi('Mac',$Agent)&&eregi('PC',$Agent)){
+ }elseif(preg_match('/.+Mac.+/i',$Agent)&&preg_match('/.+PC.+/',$Agent)){
   $os='Macintosh';
- }elseif(eregi('PowerPC',$Agent)){
+ }elseif(preg_match('/.+PowerPC.+/i',$Agent)){
   $os='PowerPC';
- }elseif(eregi('AIX',$Agent)){
+ }elseif(preg_match('/.+AIX.+/i',$Agent)){
   $os='AIX';
- }elseif(eregi('HPUX',$Agent)){
+ }elseif(preg_match('/.+HPUX.+/i',$Agent)){
   $os='HPUX';
- }elseif(eregi('NetBSD',$Agent)){
+ }elseif(preg_match('/.+NetBSD.+/i',$Agent)){
   $os='NetBSD';
- }elseif(eregi('BSD',$Agent)){
+ }elseif(preg_match('/.+BSD.+/i',$Agent)){
   $os='BSD';
- }elseif(ereg('OSF1',$Agent)){
+ }elseif(preg_match('/.+OSF1.+/i',$Agent)){
   $os='OSF1';
- }elseif(ereg('IRIX',$Agent)){
+ }elseif(preg_match('/.+IRIX.+/i',$Agent)){
   $os='IRIX';
- }elseif(eregi('FreeBSD',$Agent)){
+ }elseif(preg_match('/.+FreeBSD.+/i',$Agent)){
   $os='FreeBSD';
- }elseif(eregi('Windows Phone',$Agent)){
+ }elseif(preg_match('/.+Windows Phone.+/i',$Agent)){
   $os='Windows Phone';
- }elseif(eregi('Android',$Agent)){
+ }elseif(preg_match('/.+Android.+/i',$Agent)){
   $os='Android';
- }elseif(eregi('iPhone',$Agent)){
+ }elseif(preg_match('/.+iPhone.+/i',$Agent)){
   $os='iPhone';
- }elseif(eregi('iPad',$Agent)){
+ }elseif(preg_match('/.+iPad.+/i',$Agent)){
   $os='iPad';
  }elseif($os==''){
   $os='Unknown';
