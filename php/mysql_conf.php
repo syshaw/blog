@@ -165,16 +165,15 @@ function printContent($x)
     	$count++;
     	echo "<div id='leavemsg' class='msg'>";
         if ($row['username'] == "921543103") {
-            $head="<p><img width='30px' height='30px' src='../src/img/guest/admin.png'/><b style='color:red;'>管理员";
+            $head="<p><img width='35px' height='35px' src='../src/img/guest/admin.png'/><b style='color:red;'>管理员";
         } else {
-            $head="<p><img width='30px' height='30px' src='" . $row['profile'] . "'/>游客 <b>" . $row['username'];
+            $head="<p><img width='35px' height='35px' src='" . $row['profile'] . "'/>游客 <b>" . $row['username'];
         }
         echo $head . "</b> 留言说：</p>";
         echo "<p id='" . $row['id'] . "'>" . $row['content'] . "</p>";
-        echo "<a onclick=\"setCookie('" . $row['id'] . "');\"><img src='../src/img/up.png' width='15px' height='15px'/></a><span style='color:gray;'>(<span id='up_" . $row['id'] . "''>"  . $row['up'] . "</span>)&nbsp;&nbsp;&nbsp;&nbsp;" . $row['content_date'] . "</span>";
+        echo "<a style='cursor:pointer;' onclick=\"setCookie('" . $row['id'] . "');\"><img src='../src/img/up.png' width='15px' height='15px'/>(<span id='up_" . $row['id'] . "''>"  . $row['up'] . "</span>)</a><span'>&nbsp;&nbsp;&nbsp;&nbsp;<span class='reply' onclick=\"reply('" . $row['id'] . "');\">回复</span>&nbsp;&nbsp;&nbsp;&nbsp;" . $row['content_date'] . "</span>";
         echo "<span style='float:right;color:gray;'>#" . $count . "</span>";
-        echo "<hr>";
-        echo "</div>";
+        echo "</div><br>";
     }
     if (!$count) {
 		echo "<h2>╮(￣▽￣\")╭哎，当前留言数为0，你赶快抢个沙发呗！</h2><hr>";
