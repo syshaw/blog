@@ -7,6 +7,7 @@ require("../php/mysql_conf.php");
 
         <link rel="icon" href="../src/img/ioc.jpg" type="image/x-icon"/>
          <link rel="stylesheet" href="../src/css/guestboard.css">
+         <script src="../src/js/jquery.js"></script>
         <title>Guestboard(留言板)</title>
     </head>
     <body >
@@ -22,7 +23,6 @@ require("../php/mysql_conf.php");
                     <h4>以及你想表达的任何想法.(︶︹︺)不过不要发有关政治敏感的话题呢</h4>
                     <h6>欢迎留言哦๑乛◡乛๑</h6>
                     <p style='color:gray;'><?php echo "你的IP:" . getIpaddr(); ?><br><?php echo "浏览器:" . getBrowser(); ?><br><?php echo "操作系统:" . getOs(); ?></p>
-                    <p>当前留言总数：<?php echo getContentCount($conn);?></p>
                 </td>
         <td><img src="../src/img/nxn.gif" width="500px" height="200px"></td>
         </table>
@@ -30,7 +30,7 @@ require("../php/mysql_conf.php");
          <hr>
         <?php printContent($conn);?>
 <form id="content_form" action="guestboard.php" method="post" class="basic-grey">
-<h1>( ＾∀＾）／欢迎留言＼( ＾∀＾）</h1>
+<h1>\(≧▽≦)/当前留言总数：<?php echo getContentCount($conn);?></h1>
 <label>
 <span>名字(必填) :</span>
 <input id="username_id" type="text" name="username" placeholder="留言使用的名字" />
@@ -57,6 +57,7 @@ require("../php/mysql_conf.php");
 </footer>
 <script type="text/javascript">
     function checkContent(){
+    	var scrollTop=Math.max(document.documentElement.scrollTop,document.body.scrollTop);
         var usrnm = document.getElementById('username_id').value;
         var email = document.getElementById('email_id').value;
         var cnt = document.getElementById('content_id').value;
@@ -66,13 +67,15 @@ require("../php/mysql_conf.php");
             return;
         }
         if (!cnt) {
-            alert("大兄弟，你还没写留言内容呢p(#￣▽￣#)o");
+            alert("大兄弟，你还没写留言内容呢(O.O)");
             return;
         }
-        form.submit();
+        $.post("guestboard.php",{username:usrnm,email:email,content:cnt,scrollTop:scrollTop},function reload(){window.location.reload();});
     }
-    function setCookie(){
-        var scrollTop=Math.max(document.documentElement.scrollTop,document.body.scrollTop);
+    function setCookie($x){
+		var curvalue=document.getElementById('up_'+$x);
+		curvalue.innerHTML=parseInt(curvalue.innerHTML)+1;
+		$.get("up.php?id="+$x);
     }
 </script>
     </body>

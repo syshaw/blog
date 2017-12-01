@@ -88,7 +88,7 @@ function getOS(){
  $Agent=$_SERVER['HTTP_USER_AGENT'];
  if (preg_match('/.+win.+/i',$Agent)&&strpos($Agent, '95')){
   $os='Windows 95';
- }elseif(preg_match('/.+win.+/i',$Agent)&&preg_match('98',$Agent)){
+ }elseif(preg_match('/.+win.+/i',$Agent)&&strpos($Agent, '98')){
   $os='Windows 98';
  }elseif(preg_match('/.+win.+/i',$Agent)&&preg_match('/.+nt 5.0.+/i',$Agent)){
   $os='Windows 2000';
@@ -155,11 +155,15 @@ function getContentCount($x){
 	if ($row = mysqli_fetch_array($res)) {
 		return $row['count(*)'];
 	}
+	mysqli_close($x);
 }
 function printContent($x)
 {
     $res = mysqli_query($x,'select id,username,content,content_date,profile,up from guestboard');
+    $count = 0;
     while($row=mysqli_fetch_array($res)){
+    	$count++;
+    	echo "<div id='leavemsg' class='msg'>";
         if ($row['username'] == "921543103") {
             $head="<p><img width='30px' height='30px' src='../src/img/guest/admin.png'/><b style='color:red;'>管理员";
         } else {
@@ -167,9 +171,13 @@ function printContent($x)
         }
         echo $head . "</b> 留言说：</p>";
         echo "<p id='" . $row['id'] . "'>" . $row['content'] . "</p>";
-        echo "<a onclick='setCookie();' href='up.php?id=" . $row['id'] . "'><img src='../src/img/up.png' width='15px' height='15px'/></a><span style='color:gray;'>("  . $row['up'] . ")&nbsp;&nbsp;&nbsp;&nbsp;" . $row['content_date'] . "</span>";
+        echo "<a onclick=\"setCookie('" . $row['id'] . "');\"><img src='../src/img/up.png' width='15px' height='15px'/></a><span style='color:gray;'>(<span id='up_" . $row['id'] . "''>"  . $row['up'] . "</span>)&nbsp;&nbsp;&nbsp;&nbsp;" . $row['content_date'] . "</span>";
+        echo "<span style='float:right;color:gray;'>#" . $count . "</span>";
         echo "<hr>";
+        echo "</div>";
     }
-    mysqli_close($x);
+    if (!$count) {
+		echo "<h2>╮(￣▽￣\")╭哎，当前留言数为0，你赶快抢个沙发呗！</h2><hr>";
+    }
 }
 ?>

@@ -8,7 +8,4 @@ if ($ret) {
 }
 mysqli_close($conn);
 ?>
-<script>
-    window.location="index.php";
-</script>
 
