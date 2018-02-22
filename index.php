@@ -21,7 +21,7 @@ require("php/mysql_conf.php");
             <li class="on"><a href='/'>首页</a></li>
             <li><a href='blog'>我的博客</a></li>
             <li><a href='guestboard'>留言板</a></li>
-	<li><a href='/webos'>webos</a></li>
+	<li><a href='/webgl'>webgl</a></li>
             <li><a href='about'>关于</a></li>
         </ul>
           <div class="hover"></div>
